@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { ParasiteIcon } from "@/components/parasite-icon"
+import { ModeToggle } from "@/components/mode-toggle"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
 
@@ -38,13 +39,16 @@ export function Header() {
           ))}
         </nav>
 
-        <button
-          className="text-muted-foreground md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-4">
+          <ModeToggle />
+          <button
+            className="text-muted-foreground md:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (

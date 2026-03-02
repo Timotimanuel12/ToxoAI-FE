@@ -66,11 +66,12 @@ export function ChatSection() {
             AI Assistant
           </p>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
-            Ask ToxoAI anything
+            Your Personal Parasitology Expert
           </h2>
           <p className="mx-auto max-w-lg text-lg leading-relaxed text-muted-foreground">
-            Powered by the latest research literature on Toxoplasma gondii.
-            Get expert-level answers in seconds.
+            Trained on thousands of research papers. Ask anything about
+            T. gondii — from molecular biology to clinical treatment —
+            and get expert-level answers in seconds.
           </p>
         </div>
 
@@ -128,11 +129,10 @@ export function ChatSection() {
                       </div>
                     )}
                     <div
-                      className={`max-w-[80%] rounded-xl px-4 py-3 text-sm leading-relaxed ${
-                        msg.role === "user"
+                      className={`max-w-[80%] rounded-xl px-4 py-3 text-sm leading-relaxed ${msg.role === "user"
                           ? "bg-primary text-primary-foreground"
                           : "bg-secondary text-secondary-foreground"
-                      }`}
+                        }`}
                     >
                       {msg.content.split("\n").map((line, j) => (
                         <p key={j} className={j > 0 ? "mt-2" : ""}>

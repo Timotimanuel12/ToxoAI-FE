@@ -10,68 +10,68 @@ import {
 const topics = [
   {
     icon: Beaker,
-    title: "Basic Biology",
+    title: "Risk Factor Analysis",
     items: [
-      "Apicomplexan cell biology",
-      "Invasion mechanisms & moving junction",
-      "Parasitophorous vacuole formation",
-      "Stage conversion (tachy to brady)",
-      "Rhoptry & microneme secretion",
+      "Oral sex as a 1.56× risk factor for IgG seropositivity",
+      "Grilled ruminant meat as a 4.89× risk factor",
+      "Cat feces exposure and soil contact frequency",
+      "Personal hygiene behaviors and nail care",
+      "Socioeconomic status and asset ownership",
     ],
   },
   {
     icon: BookOpen,
-    title: "Epidemiology",
+    title: "Dietary Transmission",
     items: [
-      "Global prevalence & seroprevalence",
-      "Waterborne & foodborne outbreaks",
-      "Genotype distribution by geography",
-      "Risk factors for infection",
-      "One Health approach",
+      "Tissue cysts survive in meat cooked below 67°C",
+      "Grilled, barbecued, and smoked meat (sate, steak)",
+      "Raw ruminant and poultry consumption patterns",
+      "Seafood and raw vegetable (lalapan) risk assessment",
+      "Food handling and meat processing hygiene",
     ],
   },
   {
     icon: Stethoscope,
-    title: "Clinical Disease",
+    title: "Clinical Impact on HIV Patients",
     items: [
-      "Congenital toxoplasmosis",
-      "Ocular toxoplasmosis",
-      "Cerebral toxoplasmosis in HIV",
-      "Reactivation in transplant recipients",
-      "Lymphadenopathic form",
+      "65.48% seroprevalence in HIV patients (Jakarta study)",
+      "Bradyzoite reactivation when CD4 < 100 cells/μL",
+      "Fatal encephalitis and neurological complications",
+      "T. gondii as a leading opportunistic infection in HIV",
+      "ARV therapy and co-management of toxoplasmosis",
     ],
   },
   {
     icon: ShieldAlert,
-    title: "Immune Response",
+    title: "Hygiene & Environment",
     items: [
-      "IL-12/IFN-gamma axis",
-      "CD8+ T cell control",
-      "Parasite immune evasion",
-      "Inflammasome activation",
-      "Immune reconstitution inflammatory syndrome",
+      "Handwashing behavior before/after meals and cooking",
+      "Glove use during contact with soil and gardening",
+      "Cat contact intensity and feces cleanup frequency",
+      "Drinking water source and sanitation quality",
+      "Oocyst contamination of livestock pastoral feed",
     ],
   },
   {
     icon: Pill,
-    title: "Therapeutics",
+    title: "ML-Based Screening",
     items: [
-      "Pyrimethamine-sulfadiazine",
-      "TMP-SMX prophylaxis",
-      "Novel drug targets",
-      "Anti-bradyzoite strategies",
-      "Vaccine development pipeline",
+      "MLP neural network achieved highest F1-score of 0.80",
+      "SMOTE oversampling for class-imbalanced datasets",
+      "PCA dimensionality reduction retaining 95% variance",
+      "GridSearchCV hyperparameter optimization",
+      "Prediction model: 97.67% sensitivity, 87.35% accuracy",
     ],
   },
   {
     icon: Globe,
-    title: "Ecology & Evolution",
+    title: "Research Methodology",
     items: [
-      "Population genetics & clonal lineages",
-      "Wildlife reservoir dynamics",
-      "Environmental oocyst persistence",
-      "Marine mammal infections",
-      "Climate change implications",
+      "Cross-sectional study design with 197 HIV patients",
+      "ELISA-based IgG serological measurement",
+      "Validated questionnaire covering 80+ risk variables",
+      "Multivariate analysis with adjusted prevalence ratios",
+      "Four partner NGOs across Jakarta, Bogor, Depok, Bekasi",
     ],
   },
 ]
@@ -85,11 +85,11 @@ export function TopicsSection() {
             Topics Library
           </p>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-card-foreground md:text-4xl text-balance">
-            Deep expertise across every domain
+            Explore Every Dimension of T. gondii
           </h2>
           <p className="mx-auto max-w-lg text-lg leading-relaxed text-muted-foreground">
-            ToxoAI covers the full spectrum of Toxoplasma research, from molecular
-            biology to global health.
+            From the molecular machinery of invasion to the global politics
+            of pandemic preparedness — go as deep as you want.
           </p>
         </div>
 

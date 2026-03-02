@@ -3,40 +3,40 @@ import Image from "next/image"
 const stages = [
   {
     name: "Tachyzoite",
-    subtitle: "The rapidly dividing form",
+    subtitle: "The Speed Demon",
     description:
-      "Crescent-shaped, 2-6 um long. Found during acute infection. Invades host cells by active penetration, forming a parasitophorous vacuole. Replicates every 6-8 hours by endodyogeny (internal budding). Responsible for tissue destruction and clinical disease.",
+      "Crescent-shaped, 2–6 μm long. During acute infection, sporozoites penetrate the intestinal mucosa, undergo cell division, and transform into tachyzoites. These rapidly-dividing forms spread throughout the body — invading muscles, nerves, eyes, the brain, and meninges.",
     details: [
-      "Active invasion using the glideosome molecular motor",
-      "Secretes rhoptry and dense granule proteins to remodel host cell",
-      "Blocks host cell apoptosis to ensure survival",
-      "Can infect virtually any nucleated cell",
-      "Disseminates via bloodstream using a Trojan horse mechanism in immune cells",
+      "Actively invades host cells using the glideosome molecular motor",
+      "Replicates every 6–8 hours by endodyogeny (internal budding)",
+      "Spreads systemically via bloodstream using immune cells as Trojan horses",
+      "Transforms into bradyzoites under immune pressure from the host",
+      "Responsible for tissue destruction and clinical disease symptoms",
     ],
   },
   {
     name: "Bradyzoite",
-    subtitle: "The slow form within tissue cysts",
+    subtitle: "The Sleeper Agent",
     description:
-      "Morphologically similar to tachyzoites but metabolically distinct. Found within tissue cysts during chronic (latent) infection. Cysts are 10-100 um in diameter and can contain thousands of bradyzoites. Primarily located in the brain, skeletal muscle, and heart.",
+      "Metabolically distinct from tachyzoites, bradyzoites reside within tissue cysts (10–100 μm) primarily in brain, skeletal muscle, and heart. Protected by a cyst wall containing glycans and proteins that provide energy for survival. They persist for a lifetime — and are the hallmark of chronic T. gondii infection.",
     details: [
-      "Resistant to digestive enzymes (pepsin, trypsin), enabling foodborne transmission",
-      "Tissue cysts persist for the lifetime of the host",
-      "Express stage-specific surface antigens (BAG1/SAG4 instead of SAG1)",
-      "Reactivate to tachyzoites when host immunity declines",
-      "Major target for future drug development (no current drug eliminates cysts)",
+      "Resistant to digestive enzymes, enabling foodborne transmission through undercooked meat",
+      "Tissue cysts in livestock survive until the animal is slaughtered for consumption",
+      "Reactivate to tachyzoites when CD4 drops below 100 cells/μL in HIV patients",
+      "Found in ruminant meat: cattle, goats, sheep, and buffalo — a major infection source",
+      "No currently available drug can eliminate bradyzoite tissue cysts",
     ],
   },
   {
     name: "Oocyst & Sporozoite",
-    subtitle: "The environmental form",
+    subtitle: "Nature's Time Bomb",
     description:
-      "Oocysts are shed in cat feces (up to 100 million in a single infection). Unsporulated oocysts are non-infectious. After 1-5 days in the environment, they sporulate and become infectious. Each sporulated oocyst contains 2 sporocysts, each with 4 sporozoites.",
+      "Oocysts are shed in cat feces — up to 100 million in a single infection. After 1–5 days in the environment, they sporulate and become infectious. Oocysts contaminate grass and vegetation, which is then consumed by grazing livestock, completing the transmission cycle.",
     details: [
-      "Extremely resistant to environmental conditions",
-      "Can survive in soil and water for over a year",
-      "Resistant to most chemical disinfectants",
-      "Responsible for waterborne outbreaks (e.g., Victoria, Canada 1995)",
+      "Extremely resistant: survive in soil and water for over a year",
+      "Resist most chemical disinfectants and digestive enzymes",
+      "Livestock become infected by grazing on oocyst-contaminated vegetation",
+      "Inside the gut, oocysts rupture and release sporozoites that penetrate the intestinal mucosa",
       "Only produced during sexual reproduction in the feline intestinal epithelium",
     ],
   },
@@ -44,20 +44,20 @@ const stages = [
 
 const transmissionRoutes = [
   {
-    route: "Foodborne",
-    detail: "Ingestion of undercooked or raw meat containing tissue cysts. Pork, lamb, and venison are most commonly implicated. Estimated to cause 50% of infections in some regions.",
+    route: "Grilled/Barbecued Meat",
+    detail: "Consuming grilled ruminant meat (sate, steak, smoked meat) is a major risk — with a 4.89× higher chance of T. gondii seropositivity. Cooking methods that fail to reach 67°C throughout leave tissue cysts intact and infectious.",
   },
   {
-    route: "Oocyst exposure",
-    detail: "Contact with cat feces or contaminated soil, water, or unwashed vegetables. Gardening, sandboxes, and consuming unwashed produce are risk factors.",
+    route: "Raw/Undercooked Meat",
+    detail: "Meat from cattle, goats, sheep, and poultry can harbor T. gondii tissue cysts. Ducrocq et al.'s meta-analysis confirmed that consuming raw or undercooked meat significantly increases infection risk worldwide.",
   },
   {
-    route: "Congenital",
-    detail: "Transplacental transmission from mother to fetus during primary maternal infection. Risk increases with gestational age, but severity of fetal disease is inversely correlated.",
+    route: "Contaminated Produce & Soil",
+    detail: "Contact with cat feces or oocyst-contaminated soil, water, or unwashed vegetables. Gardening, farming, and consuming unwashed raw vegetables (lalapan) are notable risk factors identified in the research questionnaire.",
   },
   {
-    route: "Organ transplant",
-    detail: "Transmission via donated organs from seropositive donors to seronegative recipients. Heart transplants carry the highest risk due to tissue cyst tropism.",
+    route: "Congenital & Immunocompromised",
+    detail: "Transplacental transmission during primary maternal infection poses severe risk to fetuses. In HIV patients with CD4 below 100 cells/μL, dormant bradyzoites reactivate into tachyzoites, causing fatal encephalitis and neurological damage.",
   },
 ]
 
@@ -71,12 +71,12 @@ export function LifecycleSection() {
             Biology & Lifecycle
           </p>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-card-foreground md:text-4xl text-balance">
-            Three stages, countless strategies
+            A Masterclass in Survival
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            T. gondii{"'"}s lifecycle involves definitive hosts (felids) and a
-            vast range of intermediate hosts. Understanding each parasitic
-            stage is critical for diagnosis, treatment, and prevention.
+            From the gut of a house cat to the neurons of a human brain,
+            T. gondii cycles through three radically different forms —
+            each one a feat of evolutionary engineering.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export function LifecycleSection() {
         <div className="mb-16 grid gap-6 md:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border">
             <Image
-              src="/images/cat-host.jpg"
+              src="/images/cat-host-photo.png"
               alt="Cat - the definitive host of Toxoplasma gondii"
               fill
               className="object-cover"
@@ -105,7 +105,7 @@ export function LifecycleSection() {
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border">
             <Image
-              src="/images/lifecycle.jpg"
+              src="/images/lifecycle-diagram.png"
               alt="Toxoplasma gondii lifecycle stages illustration"
               fill
               className="object-cover"

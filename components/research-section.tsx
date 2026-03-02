@@ -1,40 +1,55 @@
 import { ExternalLink } from "lucide-react"
+import Image from "next/image"
 
 const papers = [
   {
-    title: "Toxoplasma gondii: from animals to humans",
-    authors: "Dubey, J.P.",
-    journal: "Clinical Microbiology and Infection",
+    title: "Sexual behavior and history of injecting narcotics use as predictors of Toxoplasma gondii infection in HIV patients",
+    authors: "Meirawan, R.F. & Ramadhani, N.R.",
+    journal: "Journal Health Sains",
+    year: "2023",
+    tag: "Risk Factors",
+  },
+  {
+    title: "Machine learning-based prediction of seropositive Toxoplasma gondii from lifestyle factors",
+    authors: "Ichwan, W.W., Tandra, P.A., Qomariyah, N.N., Meirawan, R.F. & Setiawan, F.",
+    journal: "Bina Nusantara University",
+    year: "2025",
+    tag: "AI / ML",
+  },
+  {
+    title: "Exposure to Toxoplasma gondii through consumption of raw or undercooked meat: A systematic review and meta-analysis",
+    authors: "Ducrocq, J. et al.",
+    journal: "Vector-Borne and Zoonotic Diseases",
+    year: "2021",
+    tag: "Foodborne",
+  },
+  {
+    title: "Chronic toxoplasmosis infection in members of cat breeding organization in Surabaya",
+    authors: "Marthalia, W. & Sulistyorini, L.",
+    journal: "Jurnal Kesehatan Lingkungan",
+    year: "2020",
+    tag: "Epidemiology",
+  },
+  {
+    title: "A comprehensive review of toxoplasmosis: Serious threat to human health",
+    authors: "Khairullah, A.R. et al.",
+    journal: "The Open Public Health Journal",
     year: "2024",
     tag: "Review",
   },
   {
-    title: "Mechanisms of Toxoplasma gondii persistence and latency",
-    authors: "Watts, E. et al.",
-    journal: "FEMS Microbiology Reviews",
-    year: "2024",
-    tag: "Persistence",
+    title: "Toxoplasma gondii infection and toxoplasmosis in farm animals: Risk factors and economic impact",
+    authors: "Stelzer, S. et al.",
+    journal: "Food and Waterborne Parasitology",
+    year: "2019",
+    tag: "Agriculture",
   },
   {
-    title: "CRISPR-Cas9 reveals essential and non-essential genes in T. gondii",
-    authors: "Sidik, S.M. et al.",
-    journal: "Cell",
+    title: "Prevalence of Toxoplasma gondii in Galapagos birds: Inference of risk factors associated with diet",
+    authors: "Mosquera, J.D. et al.",
+    journal: "PLOS ONE",
     year: "2023",
-    tag: "Genomics",
-  },
-  {
-    title: "Behavioral manipulation by Toxoplasma gondii: does dopamine play a role?",
-    authors: "McConkey, G.A. et al.",
-    journal: "Trends in Parasitology",
-    year: "2024",
-    tag: "Behavior",
-  },
-  {
-    title: "Novel therapeutic targets for chronic toxoplasmosis",
-    authors: "Alday, P.H. & Doggett, J.S.",
-    journal: "Antimicrobial Agents and Chemotherapy",
-    year: "2025",
-    tag: "Therapeutics",
+    tag: "Ecology",
   },
 ]
 
@@ -42,16 +57,37 @@ export function ResearchSection() {
   return (
     <section id="research" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
+        {/* Research lab image banner */}
+        <div className="relative mb-16 overflow-hidden rounded-2xl">
+          <div className="relative aspect-[21/9] w-full">
+            <Image
+              src="/images/research-lab.png"
+              alt="Scientists working in a parasitology research laboratory"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/30 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+              <p className="font-mono text-xs tracking-widest text-primary-foreground/70 uppercase">
+                Cutting-Edge Science
+              </p>
+              <h3 className="mt-1 max-w-md text-xl font-bold text-primary-foreground md:text-2xl">
+                Where Discovery Meets Impact
+              </h3>
+            </div>
+          </div>
+        </div>
+
         <div className="mb-16 max-w-2xl">
           <p className="mb-3 font-mono text-sm tracking-widest text-primary uppercase">
             Research Feed
           </p>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
-            Stay current with the latest in Toxoplasma research
+            From the Frontier of Parasitology
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            ToxoAI is continuously updated with new publications from top parasitology
-            and infectious disease journals.
+            The latest breakthroughs from top journals — curated and
+            summarized so you never miss a critical finding.
           </p>
         </div>
 

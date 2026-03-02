@@ -1,53 +1,54 @@
 import { Bug, Dna, FlaskConical, Microscope, Cat, Brain, Globe, ShieldAlert } from "lucide-react"
+import Image from "next/image"
 
 const quickFacts = [
   {
     icon: Microscope,
-    title: "Phylum Apicomplexa",
+    title: "65% of HIV Patients Infected",
     description:
-      "T. gondii is an obligate intracellular protozoan parasite belonging to the phylum Apicomplexa, the same group as Plasmodium (malaria). It was first described in 1908 by Nicolle and Manceaux in the North African rodent Ctenodactylus gundi.",
+      "A study of 197 HIV patients in Jakarta, Bogor, Depok, and Bekasi found that 65.48% tested seropositive for IgG Toxoplasma gondii — revealing alarmingly high chronic infection rates in immunocompromised populations.",
   },
   {
     icon: Cat,
-    title: "Definitive Host: Felids",
+    title: "Cat Feces Contaminate the Food Chain",
     description:
-      "Cats and other felids are the only known definitive hosts where the sexual stage of the parasite occurs. When a cat ingests infected prey, T. gondii undergoes gametogony in the intestinal epithelium, producing millions of oocysts shed in feces for 1-2 weeks.",
+      "Ruminant livestock (cattle, goats, sheep) become infected by grazing on grass and vegetation contaminated with oocysts from cat feces. The parasites then form tissue cysts in the animals' muscles — entering the human food chain.",
   },
   {
     icon: Globe,
-    title: "Global Distribution",
+    title: "Grilled Meat: A 4.89× Risk Factor",
     description:
-      "Seroprevalence varies dramatically worldwide: from under 10% in parts of East Asia to over 60% in parts of Latin America and tropical Africa. Factors include climate, dietary habits, cat populations, and water sanitation.",
+      "HIV patients who consumed grilled or barbecued ruminant meat (sate, steak, smoked meat) had a 4.89 times higher risk of T. gondii seropositivity. Cooking methods like grilling fail to reach 67°C throughout the meat, leaving tissue cysts intact.",
   },
   {
     icon: Brain,
-    title: "Neurotropism",
+    title: "Bradyzoites Invade the Brain",
     description:
-      "T. gondii has a remarkable affinity for the central nervous system. During chronic infection, tissue cysts (containing bradyzoites) preferentially form in the brain and skeletal muscle, where they can persist for the lifetime of the host.",
+      "After infection, tachyzoites spread through the body and transform into bradyzoites under immune pressure. These dormant forms lodge in brain tissue, muscles, and eyes — persisting for a lifetime. When CD4 drops below 100 cells/μL in HIV patients, they reactivate with fatal consequences.",
   },
   {
     icon: ShieldAlert,
-    title: "Clinical Significance",
+    title: "Oocysts Resist Digestive Enzymes",
     description:
-      "Most infections in immunocompetent individuals are asymptomatic. However, primary infection during pregnancy can cause severe congenital disease, and reactivation in immunocompromised patients (HIV/AIDS, organ transplant) can be life-threatening.",
+      "T. gondii oocysts are extraordinarily resilient — surviving in soil and water for over a year and resisting digestive enzymes. Once ingested, oocysts rupture in the gut, releasing sporozoites that penetrate the intestinal mucosa and spread systemically.",
   },
   {
     icon: Bug,
-    title: "Three Infectious Stages",
+    title: "T. gondii Found in Human Semen",
     description:
-      "The parasite exists in three infectious forms: tachyzoites (rapidly dividing, acute phase), bradyzoites (slowly dividing, within tissue cysts), and sporozoites (within oocysts shed by cats). Each stage plays a distinct role in transmission.",
+      "Research has detected Toxoplasma gondii in semen and ejaculate, damaging sperm DNA structure. This finding supports sexual transmission as an infection route, with oral sex identified as a 1.56× risk factor for seropositivity among HIV patients.",
   },
   {
     icon: Dna,
-    title: "Genome & Strain Types",
+    title: "ML Screening Achieves 87% Accuracy",
     description:
-      "T. gondii has a ~65 Mb genome across 14 chromosomes. Three major clonal lineages (Types I, II, III) dominate in North America and Europe. Type II is most common in clinical cases. Atypical strains are more diverse in South America.",
+      "A prediction model using lifestyle questionnaire data (sexual behavior, diet, hygiene, environment) achieved 97.67% sensitivity and 87.35% accuracy for screening T. gondii seropositivity — offering a cost-effective alternative to laboratory testing.",
   },
   {
     icon: FlaskConical,
-    title: "Immune Evasion Expert",
+    title: "Lifestyle Predicts Infection Risk",
     description:
-      "The parasite secretes effector proteins from specialized organelles (rhoptries, dense granules) that manipulate host cell signaling, block apoptosis, hijack the NF-kB pathway, and modulate the immune response to ensure its own survival.",
+      "Machine learning models trained on dietary risk scores and economic factors achieved F1-scores up to 0.80. Key predictive features include consumption of undercooked meat, cat feces exposure, soil contact frequency, and personal hygiene habits.",
   },
 ]
 
@@ -55,18 +56,43 @@ export function OverviewSection() {
   return (
     <section id="overview" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
+        {/* Global prevalence map banner */}
+        <div className="relative mb-16 overflow-hidden rounded-2xl">
+          <div className="relative aspect-[21/9] w-full">
+            <Image
+              src="/images/global-map.png"
+              alt="Global distribution of Toxoplasma gondii prevalence"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 top-0 flex flex-col justify-center p-8 md:p-12">
+              <p className="mb-2 font-mono text-xs tracking-widest text-primary-foreground/70 uppercase">
+                Global Reach
+              </p>
+              <h3 className="mb-2 max-w-md text-2xl font-bold text-primary-foreground md:text-3xl text-balance">
+                Infecting Every Continent on Earth
+              </h3>
+              <p className="max-w-sm text-sm leading-relaxed text-primary-foreground/80">
+                From the Arctic to the tropics, T. gondii has colonized every
+                warm-blooded ecosystem — making it one of the most widespread
+                parasites ever documented.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="mb-16 max-w-2xl">
           <p className="mb-3 font-mono text-sm tracking-widest text-primary uppercase">
             Overview
           </p>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
-            What is Toxoplasma gondii?
+            The World{"'"}s Most Cunning Parasite
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            T. gondii is one of the most successful parasites in nature. It can
-            infect virtually any warm-blooded animal, has evolved extraordinary
-            strategies for immune evasion, and may even manipulate host behavior
-            to enhance its own transmission.
+            It invades any warm-blooded animal. It rewires the brains of its
+            hosts. It turns cats into biological weapons. And it may already
+            be inside you — silently manipulating your behavior.
           </p>
         </div>
 

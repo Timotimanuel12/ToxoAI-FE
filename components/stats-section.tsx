@@ -2,10 +2,10 @@ import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const stats = [
-  { value: "~1/3", label: "of the global population infected" },
-  { value: "200+", label: "known intermediate host species" },
-  { value: "1908", label: "year of discovery by Nicolle & Manceaux" },
-  { value: "16", label: "chromosomes in the genome" },
+  { value: "65.48%", label: "seroprevalence in HIV patients studied" },
+  { value: "4.89×", label: "higher risk from grilled ruminant meat" },
+  { value: "87.35%", label: "accuracy of the prediction model" },
+  { value: "197", label: "HIV patients in the dissertation study" },
 ]
 
 export function StatsSection() {
@@ -25,15 +25,16 @@ export function StatsSection() {
 
         <div className="mt-16 rounded-xl border border-primary/20 bg-primary/5 p-8 text-center md:p-12">
           <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl text-balance">
-            Curious about T. gondii?
+            Ready to Decode the World{"'"}s Stealthiest Pathogen?
           </h2>
           <p className="mx-auto mb-8 max-w-lg text-base text-muted-foreground leading-relaxed">
-            Whether you{"'"}re a student, researcher, or clinician, explore
-            everything about this remarkable parasite right here.
+            Whether you{"'"}re a student cramming for exams, a researcher
+            chasing a breakthrough, or a clinician treating patients —
+            everything you need is right here.
           </p>
           <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2" asChild>
             <a href="#chat">
-              Ask ToxoAI a Question
+              Start Exploring with ToxoAI
               <ArrowRight className="w-4 h-4" />
             </a>
           </Button>

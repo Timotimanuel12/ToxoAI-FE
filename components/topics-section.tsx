@@ -11,6 +11,7 @@ const topics = [
   {
     icon: Beaker,
     title: "Risk Factor Analysis",
+    image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&h=250&fit=crop",
     items: [
       "Oral sex as a 1.56× risk factor for IgG seropositivity",
       "Grilled ruminant meat as a 4.89× risk factor",
@@ -22,6 +23,7 @@ const topics = [
   {
     icon: BookOpen,
     title: "Dietary Transmission",
+    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=250&fit=crop",
     items: [
       "Tissue cysts survive in meat cooked below 67°C",
       "Grilled, barbecued, and smoked meat (sate, steak)",
@@ -33,6 +35,7 @@ const topics = [
   {
     icon: Stethoscope,
     title: "Clinical Impact on HIV Patients",
+    image: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=400&h=250&fit=crop",
     items: [
       "65.48% seroprevalence in HIV patients (Jakarta study)",
       "Bradyzoite reactivation when CD4 < 100 cells/μL",
@@ -44,6 +47,7 @@ const topics = [
   {
     icon: ShieldAlert,
     title: "Hygiene & Environment",
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop",
     items: [
       "Handwashing behavior before/after meals and cooking",
       "Glove use during contact with soil and gardening",
@@ -55,6 +59,7 @@ const topics = [
   {
     icon: Pill,
     title: "ML-Based Screening",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop",
     items: [
       "MLP neural network achieved highest F1-score of 0.80",
       "SMOTE oversampling for class-imbalanced datasets",
@@ -66,6 +71,7 @@ const topics = [
   {
     icon: Globe,
     title: "Research Methodology",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop",
     items: [
       "Cross-sectional study design with 197 HIV patients",
       "ELISA-based IgG serological measurement",
@@ -78,46 +84,58 @@ const topics = [
 
 export function TopicsSection() {
   return (
-    <section id="topics" className="border-t border-border bg-card py-24 md:py-32">
+    <section id="topics" className="border-t border-border bg-card py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-16 text-center">
-          <p className="mb-3 font-mono text-sm tracking-widest text-primary uppercase">
+        <div className="mb-10 text-center">
+          <p className="mb-2 font-mono text-xs tracking-widest text-indigo-500 uppercase">
             Topics Library
           </p>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-card-foreground md:text-4xl text-balance">
+          <h2 className="mb-3 text-2xl font-bold tracking-tight text-card-foreground md:text-3xl">
             Explore Every Dimension of T. gondii
           </h2>
-          <p className="mx-auto max-w-lg text-lg leading-relaxed text-muted-foreground">
-            From the molecular machinery of invasion to the global politics
-            of pandemic preparedness — go as deep as you want.
+          <p className="mx-auto max-w-lg text-base leading-relaxed text-muted-foreground">
+            From dietary risk factors to machine learning screening tools
+            — go as deep as you want.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {topics.map((topic) => (
             <div
               key={topic.title}
-              className="rounded-xl border border-border bg-background p-6"
+              className="group overflow-hidden rounded-xl border border-border bg-background transition-all duration-200 hover:border-indigo-200 hover:shadow-sm dark:hover:border-indigo-800"
             >
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <topic.icon className="h-4.5 w-4.5" />
+              <div className="relative h-32 overflow-hidden">
+                <img
+                  src={topic.image}
+                  alt={topic.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 px-5 pb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+                      <topic.icon className="h-4 w-4" />
+                    </div>
+                    <h3 className="text-sm font-bold text-foreground">
+                      {topic.title}
+                    </h3>
+                  </div>
                 </div>
-                <h3 className="text-base font-semibold text-foreground">
-                  {topic.title}
-                </h3>
               </div>
-              <ul className="flex flex-col gap-2">
-                {topic.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-muted-foreground"
-                  >
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/40" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <div className="px-5 pb-5 pt-2">
+                <ul className="flex flex-col gap-1.5">
+                  {topic.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed"
+                    >
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-indigo-400/50" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

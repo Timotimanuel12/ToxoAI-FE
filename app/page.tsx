@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
 import { OverviewSection } from "@/components/overview-section"
+import { NewsSection } from "@/components/news-section"
 import { LifecycleSection } from "@/components/lifecycle-section"
 import { ChatSection } from "@/components/chat-section"
 import { TopicsSection } from "@/components/topics-section"
@@ -15,6 +16,7 @@ export default function Page() {
       <main>
         <HeroSection />
         <OverviewSection />
+        <NewsSection />
         <LifecycleSection />
         <ChatSection />
         <TopicsSection />
@@ -25,3 +27,4 @@ export default function Page() {
     </div>
   )
 }
+

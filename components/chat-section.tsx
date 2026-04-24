@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button"
 import { ParasiteIcon } from "@/components/parasite-icon"
 import { Send, User, Loader2 } from "lucide-react"
 
-interface Message {
+interface ChatMessage {
   role: "user" | "assistant"
   content: string
+  sources?: string[]
+  error?: boolean
 }
 
 const suggestedQuestions = [
@@ -17,19 +19,10 @@ const suggestedQuestions = [
   "What are the current treatment options?",
 ]
 
-const mockResponses: Record<string, string> = {
-  "What is the lifecycle of T. gondii?":
-    "Toxoplasma gondii has a complex lifecycle involving both definitive and intermediate hosts.\n\n**Sexual reproduction** occurs exclusively in felids (cats), where the parasite undergoes gametogony in intestinal epithelial cells, producing oocysts shed in feces.\n\n**Asexual reproduction** occurs in virtually all warm-blooded animals through two forms:\n- **Tachyzoites** (rapidly dividing form during acute infection)\n- **Bradyzoites** (slowly dividing form within tissue cysts during chronic infection)\n\nTransmission routes include ingestion of oocysts from contaminated soil/water, consumption of undercooked meat containing tissue cysts, and congenital transmission from mother to fetus.",
-  "How does toxoplasmosis affect pregnancy?":
-    "Congenital toxoplasmosis is one of the most clinically significant aspects of T. gondii infection.\n\n**Risk factors:**\n- Primary maternal infection during pregnancy poses the greatest risk\n- Transmission rate increases with gestational age (10-15% in first trimester, up to 70% in third trimester)\n- However, severity of fetal disease is inversely related to gestational age\n\n**Clinical manifestations can include:**\n- Chorioretinitis (most common late sequel)\n- Hydrocephalus\n- Intracranial calcifications\n- The classic triad: chorioretinitis, hydrocephalus, and intracranial calcifications\n\nScreening programs exist in countries like France and Austria, involving serial serological testing of seronegative pregnant women.",
-  "Can T. gondii alter human behavior?":
-    "This is one of the most fascinating and debated areas of Toxoplasma research.\n\n**In rodents (well-established):**\n- Infected rodents show reduced fear of cat odor (\"fatal attraction\" phenomenon)\n- This manipulation is thought to enhance transmission to the definitive host\n- Mediated partly through dopamine pathway alterations\n\n**In humans (studied but debated):**\n- Latent infection has been associated with subtle behavioral changes including slower reaction times, increased risk-taking, and altered personality profiles\n- Some studies link chronic infection to increased traffic accident risk\n- Associations with schizophrenia and other psychiatric conditions have been reported\n- T. gondii encodes tyrosine hydroxylase, a rate-limiting enzyme in dopamine synthesis\n\nNote: Many human studies are correlational, and causation remains difficult to establish.",
-  "What are the current treatment options?":
-    "Treatment of toxoplasmosis depends on the clinical presentation and immune status of the patient.\n\n**Standard therapy:**\n- **Pyrimethamine + sulfadiazine + folinic acid** (leucovorin) remains the gold standard\n- Treatment duration varies: 4-6 weeks for acute infection, longer for immunocompromised patients\n\n**Alternative regimens:**\n- Trimethoprim-sulfamethoxazole (TMP-SMX) as both treatment and prophylaxis\n- Atovaquone for patients intolerant to standard therapy\n- Clindamycin + pyrimethamine as second-line\n\n**For immunocompromised patients (e.g., HIV/AIDS):**\n- Acute treatment followed by chronic suppressive therapy\n- Secondary prophylaxis can be discontinued after immune reconstitution with ART\n\n**Emerging research:**\n- Endochin-like quinolones targeting the cytochrome bc1 complex\n- Bumped kinase inhibitors (BKIs)\n- Drug combinations targeting bradyzoite cysts (a major unmet need)",
-}
+const API_URL = "http://localhost:8000/chat"
 
 export function ChatSection() {
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -39,7 +32,7 @@ export function ChatSection() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  function handleSend(text?: string) {
+  async function handleSend(text?: string) {
     const message = text || input.trim()
     if (!message) return
 
@@ -47,15 +40,39 @@ export function ChatSection() {
     setInput("")
     setIsTyping(true)
 
-    // Simulate AI response
-    setTimeout(() => {
-      const response =
-        mockResponses[message] ||
-        `That's a great question about Toxoplasma gondii! As an AI specializing in parasitology, I can tell you that this topic involves several key aspects of T. gondii biology.\n\nThe parasite's ability to infect virtually any nucleated cell in warm-blooded animals makes it one of the most successful parasites on Earth, infecting approximately one-third of the global population.\n\nFor more detailed information, I'd recommend checking recent publications in journals like *Parasitology*, *International Journal for Parasitology*, and *PLOS Pathogens*.`
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      })
 
-      setMessages((prev) => [...prev, { role: "assistant", content: response }])
+      if (!res.ok) {
+        throw new Error(`Server responded with status ${res.status}`)
+      }
+
+      const data: { response: string; sources?: string[] } = await res.json()
+
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.response, sources: data.sources },
+      ])
+    } catch (err: unknown) {
+      const isCors =
+        err instanceof TypeError && err.message.toLowerCase().includes("fetch")
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: isCors
+            ? "Could not reach the backend. This is likely a CORS issue — please ask your peer to enable CORS on the server (allow http://localhost:3000), then try again."
+            : `Backend error: ${err instanceof Error ? err.message : "Unknown error"}. Please make sure the server is running at ${API_URL}.`,
+          error: true,
+        },
+      ])
+    } finally {
       setIsTyping(false)
-    }, 1500)
+    }
   }
 
   return (
@@ -128,17 +145,36 @@ export function ChatSection() {
                         <ParasiteIcon className="w-3.5 h-3.5 text-primary" />
                       </div>
                     )}
-                    <div
-                      className={`max-w-[80%] rounded-xl px-4 py-3 text-sm leading-relaxed ${msg.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-secondary text-secondary-foreground"
+                    <div className="flex flex-col gap-1.5 max-w-[80%]">
+                      <div
+                        className={`rounded-xl px-4 py-3 text-sm leading-relaxed ${
+                          msg.role === "user"
+                            ? "bg-primary text-primary-foreground"
+                            : msg.error
+                            ? "bg-destructive/10 text-destructive border border-destructive/20"
+                            : "bg-secondary text-secondary-foreground"
                         }`}
-                    >
-                      {msg.content.split("\n").map((line, j) => (
-                        <p key={j} className={j > 0 ? "mt-2" : ""}>
-                          {line}
-                        </p>
-                      ))}
+                      >
+                        {msg.content.split("\n").map((line, j) => (
+                          <p key={j} className={j > 0 ? "mt-2" : ""}>
+                            {line}
+                          </p>
+                        ))}
+                      </div>
+                      {/* Sources */}
+                      {msg.sources && msg.sources.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 px-1">
+                          <span className="text-[10px] text-muted-foreground self-center mr-0.5">Sources:</span>
+                          {msg.sources.map((src) => (
+                            <span
+                              key={src}
+                              className="rounded-md bg-primary/10 border border-primary/20 px-2 py-0.5 font-mono text-[10px] text-primary/80"
+                            >
+                              {src}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     {msg.role === "user" && (
                       <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary">

@@ -1,63 +1,59 @@
-import { Bug, Dna, FlaskConical, Microscope, Cat, Brain, Globe, ShieldAlert } from "lucide-react"
+import { ArrowRight, Microscope, Cat, Globe, Brain, ShieldAlert, Bug, Dna, FlaskConical } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-const quickFacts = [
+const sideCards = [
   {
+    label: "HIV Seroprevalence",
+    text: "65.48% of 197 HIV patients tested positive for IgG T. gondii in the Jakarta metropolitan area",
     icon: Microscope,
-    title: "65% of HIV Patients Infected",
-    description:
-      "A study of 197 HIV patients in Jakarta, Bogor, Depok, and Bekasi found that 65.48% tested seropositive for IgG Toxoplasma gondii — revealing alarmingly high chronic infection rates in immunocompromised populations.",
+  },
+  {
+    label: "Dietary Risk",
+    text: "Grilled ruminant meat consumption carries a 4.89× higher risk of T. gondii seropositivity",
+    icon: Globe,
+  },
+  {
+    label: "Brain Invasion",
+    text: "Bradyzoites lodge in brain tissue for life and reactivate when CD4 drops below 100 cells/μL",
+    icon: Brain,
+  },
+  {
+    label: "Sexual Transmission",
+    text: "T. gondii detected in semen — oral sex identified as a 1.56× risk factor in HIV patients",
+    icon: Bug,
+  },
+]
+
+const bottomFacts = [
+  {
+    icon: ShieldAlert,
+    title: "Oocyst Resilience",
+    description: "Survive in soil and water for over a year, resisting digestive enzymes and most disinfectants.",
   },
   {
     icon: Cat,
-    title: "Cat Feces Contaminate the Food Chain",
-    description:
-      "Ruminant livestock (cattle, goats, sheep) become infected by grazing on grass and vegetation contaminated with oocysts from cat feces. The parasites then form tissue cysts in the animals' muscles — entering the human food chain.",
-  },
-  {
-    icon: Globe,
-    title: "Grilled Meat: A 4.89× Risk Factor",
-    description:
-      "HIV patients who consumed grilled or barbecued ruminant meat (sate, steak, smoked meat) had a 4.89 times higher risk of T. gondii seropositivity. Cooking methods like grilling fail to reach 67°C throughout the meat, leaving tissue cysts intact.",
-  },
-  {
-    icon: Brain,
-    title: "Bradyzoites Invade the Brain",
-    description:
-      "After infection, tachyzoites spread through the body and transform into bradyzoites under immune pressure. These dormant forms lodge in brain tissue, muscles, and eyes — persisting for a lifetime. When CD4 drops below 100 cells/μL in HIV patients, they reactivate with fatal consequences.",
-  },
-  {
-    icon: ShieldAlert,
-    title: "Oocysts Resist Digestive Enzymes",
-    description:
-      "T. gondii oocysts are extraordinarily resilient — surviving in soil and water for over a year and resisting digestive enzymes. Once ingested, oocysts rupture in the gut, releasing sporozoites that penetrate the intestinal mucosa and spread systemically.",
-  },
-  {
-    icon: Bug,
-    title: "T. gondii Found in Human Semen",
-    description:
-      "Research has detected Toxoplasma gondii in semen and ejaculate, damaging sperm DNA structure. This finding supports sexual transmission as an infection route, with oral sex identified as a 1.56× risk factor for seropositivity among HIV patients.",
+    title: "Food Chain Entry",
+    description: "Livestock graze on oocyst-contaminated vegetation from cat feces, forming tissue cysts in their muscles.",
   },
   {
     icon: Dna,
-    title: "ML Screening Achieves 87% Accuracy",
-    description:
-      "A prediction model using lifestyle questionnaire data (sexual behavior, diet, hygiene, environment) achieved 97.67% sensitivity and 87.35% accuracy for screening T. gondii seropositivity — offering a cost-effective alternative to laboratory testing.",
+    title: "ML Screening",
+    description: "Prediction model achieves 97.67% sensitivity and 87.35% accuracy from lifestyle questionnaire data.",
   },
   {
     icon: FlaskConical,
-    title: "Lifestyle Predicts Infection Risk",
-    description:
-      "Machine learning models trained on dietary risk scores and economic factors achieved F1-scores up to 0.80. Key predictive features include consumption of undercooked meat, cat feces exposure, soil contact frequency, and personal hygiene habits.",
+    title: "Lifestyle Factors",
+    description: "Dietary risk scores, economic factors, and hygiene habits predict infection with F1-scores up to 0.80.",
   },
 ]
 
 export function OverviewSection() {
   return (
-    <section id="overview" className="py-24 md:py-32">
+    <section id="overview" className="py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Global prevalence map banner */}
-        <div className="relative mb-16 overflow-hidden rounded-2xl">
+        <div className="relative mb-12 overflow-hidden rounded-2xl">
           <div className="relative aspect-[21/9] w-full">
             <Image
               src="/images/global-map.png"
@@ -82,35 +78,79 @@ export function OverviewSection() {
           </div>
         </div>
 
-        <div className="mb-16 max-w-2xl">
-          <p className="mb-3 font-mono text-sm tracking-widest text-primary uppercase">
-            Overview
-          </p>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
-            The World{"'"}s Most Cunning Parasite
-          </h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">
-            It invades any warm-blooded animal. It rewires the brains of its
-            hosts. It turns cats into biological weapons. And it may already
-            be inside you — silently manipulating your behavior.
-          </p>
+        {/* Reference-style layout: large card left + stacked cards right */}
+        <div className="mb-12 grid gap-6 lg:grid-cols-5">
+          {/* Left — large featured card */}
+          <div className="lg:col-span-3 flex flex-col overflow-hidden rounded-2xl bg-indigo-50 dark:bg-indigo-950/30">
+            <div className="flex flex-1 flex-col justify-center p-8 md:p-10">
+              <p className="mb-3 font-mono text-xs tracking-widest text-indigo-500 uppercase">
+                Overview
+              </p>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
+                The World{"'"}s Most Cunning Parasite
+              </h2>
+              <p className="mb-6 max-w-lg text-base leading-relaxed text-muted-foreground">
+                It invades any warm-blooded animal. It rewires the brains of its
+                hosts. It turns cats into biological weapons. And it may already
+                be inside you — silently manipulating your behavior.
+              </p>
+              <div>
+                <Button className="bg-indigo-600 text-white hover:bg-indigo-700 gap-2" asChild>
+                  <a href="#lifecycle">
+                    Explore the Lifecycle
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+            <div className="relative h-56 md:h-64">
+              <img
+                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&h=400&fit=crop"
+                alt="Microscopic view of Toxoplasma gondii"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-indigo-50 dark:from-indigo-950/30 via-transparent to-transparent" />
+            </div>
+          </div>
+
+          {/* Right — stacked side cards */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            {sideCards.map((card) => (
+              <a
+                key={card.label}
+                href="#lifecycle"
+                className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all duration-200 hover:border-indigo-300 hover:shadow-sm dark:hover:border-indigo-700"
+              >
+                <div className="flex-1">
+                  <p className="mb-1 text-xs font-semibold tracking-wide text-indigo-500 uppercase">
+                    {card.label}
+                  </p>
+                  <p className="text-sm font-medium leading-snug text-foreground">
+                    {card.text}
+                  </p>
+                </div>
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-background transition-colors group-hover:border-indigo-300 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-950/30">
+                  <ArrowRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-indigo-500" />
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {quickFacts.map((fact) => (
+        {/* Bottom fact strip */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {bottomFacts.map((fact) => (
             <div
               key={fact.title}
-              className="group rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40"
+              className="rounded-xl border border-border bg-card p-5 transition-colors hover:border-indigo-200 dark:hover:border-indigo-800"
             >
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <fact.icon className="h-5 w-5" />
-                </div>
-                <h3 className="text-base font-semibold text-card-foreground">
-                  {fact.title}
-                </h3>
+              <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-50 text-indigo-500 dark:bg-indigo-950/40">
+                <fact.icon className="h-4 w-4" />
               </div>
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <h3 className="mb-1 text-sm font-semibold text-foreground">
+                {fact.title}
+              </h3>
+              <p className="text-xs leading-relaxed text-muted-foreground">
                 {fact.description}
               </p>
             </div>

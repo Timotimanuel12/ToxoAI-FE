@@ -47,7 +47,7 @@ export function StatsSection() {
           </div>
           <div className="md:col-span-2 relative min-h-[200px]">
             <img
-              src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&h=400&fit=crop"
+              src="/images/research-lab.png"
               alt="Medical research laboratory"
               className="h-full w-full object-cover"
             />

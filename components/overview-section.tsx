@@ -105,7 +105,7 @@ export function OverviewSection() {
             </div>
             <div className="relative h-56 md:h-64">
               <img
-                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&h=400&fit=crop"
+                src="/images/toxoplasma-microscopy.png"
                 alt="Microscopic view of Toxoplasma gondii"
                 className="h-full w-full object-cover"
               />

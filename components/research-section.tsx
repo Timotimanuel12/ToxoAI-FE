@@ -116,8 +116,8 @@ export function ResearchSection() {
           </div>
           <div className="md:col-span-2 relative overflow-hidden rounded-xl border border-border min-h-[220px]">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=500&fit=crop&q=80"
-              alt="Scientific data analysis"
+              src="/images/brain-tissue.png"
+              alt="Brain tissue infected with Toxoplasma gondii"
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
@@ -149,10 +149,15 @@ export function ResearchSection() {
                   {paper.authors} &mdash; <span className="italic">{paper.journal}</span>
                 </p>
               </div>
-              <button className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-indigo-500 shrink-0">
+              <a
+                href={`https://scholar.google.com/scholar?q=${encodeURIComponent(paper.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-indigo-500 shrink-0"
+              >
                 View
                 <ExternalLink className="h-3 w-3" />
-              </button>
+              </a>
             </div>
           ))}
         </div>

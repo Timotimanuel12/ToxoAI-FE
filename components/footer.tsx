@@ -22,10 +22,16 @@ export function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-semibold text-card-foreground">Topics</h4>
             <ul className="flex flex-col gap-2.5">
-              {["Lifecycle", "Pathogenesis", "Diagnosis", "Treatment", "Genomics"].map((item) => (
-                <li key={item}>
-                  <Link href="#topics" className="text-sm text-muted-foreground transition-colors hover:text-primary">
-                    {item}
+              {[
+                { label: "Lifecycle", href: "#lifecycle" },
+                { label: "Pathogenesis", href: "#topics" },
+                { label: "Diagnosis", href: "#topics" },
+                { label: "Treatment", href: "#topics" },
+                { label: "Genomics", href: "#topics" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -35,26 +41,46 @@ export function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-semibold text-card-foreground">Resources</h4>
             <ul className="flex flex-col gap-2.5">
-              {["Research Papers", "Clinical Guidelines", "Strain Database", "Teaching Materials", "Glossary"].map(
-                (item) => (
-                  <li key={item}>
-                    <Link href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
-                      {item}
-                    </Link>
-                  </li>
-                )
-              )}
+              {[
+                { label: "Research Papers", href: "https://pubmed.ncbi.nlm.nih.gov/?term=Toxoplasma+gondii" },
+                { label: "Clinical Guidelines", href: "https://www.cdc.gov/parasites/toxoplasmosis/health_professionals/" },
+                { label: "Strain Database", href: "https://toxodb.org" },
+                { label: "Teaching Materials", href: "https://www.cdc.gov/parasites/toxoplasmosis/" },
+                { label: "Glossary", href: "#overview" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
             <h4 className="mb-4 text-sm font-semibold text-card-foreground">Community</h4>
             <ul className="flex flex-col gap-2.5">
-              {["About Us", "Contact", "Contribute", "API Access", "Privacy Policy"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
-                    {item}
-                  </Link>
+              {[
+                { label: "About Us", href: "#overview" },
+                { label: "Contact", href: "mailto:timotimanuel12@gmail.com" },
+                { label: "Contribute", href: "https://github.com/Timotimanuel12/ToxoAI-FE" },
+                { label: "API Access", href: "#chat" },
+                { label: "Privacy Policy", href: "#" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {item.label}
+                  </a>
                 </li>
               ))}
             </ul>

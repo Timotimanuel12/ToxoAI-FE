@@ -16,8 +16,9 @@ interface ChatMessage {
 interface AttachedFile {
   name: string
   type: "pdf" | "txt"
-  content: string
-  extractionFailed?: boolean
+  file: File
+  uploaded?: boolean
+  uploadError?: string
 }
 
 const suggestedQuestions = [
@@ -28,44 +29,14 @@ const suggestedQuestions = [
 ]
 
 const API_URL = "http://localhost:8000/chat"
-
-async function extractTextFromPDF(file: File): Promise<string> {
-  const pdfjsLib = await import("pdfjs-dist")
-  // Use unpkg CDN with the exact installed version — works reliably in browser
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`
-
-  const arrayBuffer = await file.arrayBuffer()
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
-  const pages: string[] = []
-
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i)
-    const textContent = await page.getTextContent()
-    const text = textContent.items
-      .map((item: { str?: string }) => item.str ?? "")
-      .join(" ")
-    pages.push(text)
-  }
-
-  return pages.join("\n\n")
-}
-
-async function extractTextFromTXT(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = (e) => resolve(e.target?.result as string)
-    reader.onerror = () => reject(new Error("Failed to read file"))
-    reader.readAsText(file)
-  })
-}
+const UPLOAD_URL = "http://localhost:8000/upload-source"
 
 export function ChatSection() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [attachedFile, setAttachedFile] = useState<AttachedFile | null>(null)
-  const [isReadingFile, setIsReadingFile] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -86,25 +57,8 @@ export function ChatSection() {
 
     const fileType = ext as "pdf" | "txt"
 
-    // Show the card immediately with the filename — don't wait for extraction
-    setAttachedFile({ name: file.name, type: fileType, content: "" })
-    setIsReadingFile(true)
-
-    try {
-      let content: string
-      if (fileType === "pdf") {
-        content = await extractTextFromPDF(file)
-      } else {
-        content = await extractTextFromTXT(file)
-      }
-      // Update with extracted content
-      setAttachedFile({ name: file.name, type: fileType, content })
-    } catch {
-      // Keep showing the file card but mark extraction as failed
-      setAttachedFile({ name: file.name, type: fileType, content: "", extractionFailed: true })
-    } finally {
-      setIsReadingFile(false)
-    }
+    // Store the raw file — backend handles parsing
+    setAttachedFile({ name: file.name, type: fileType, file })
   }
 
   function removeAttachment() {
@@ -131,16 +85,28 @@ export function ChatSection() {
     setIsTyping(true)
 
     try {
-      const body: Record<string, string> = { message: message || "" }
+      // Step 1: If there's a file, upload it to /upload-source first
       if (currentFile) {
-        body.file_content = currentFile.content
-        body.file_name = currentFile.name
+        setIsUploading(true)
+        const formData = new FormData()
+        formData.append("file", currentFile.file)
+
+        const uploadRes = await fetch(UPLOAD_URL, {
+          method: "POST",
+          body: formData,
+        })
+
+        if (!uploadRes.ok) {
+          throw new Error(`File upload failed with status ${uploadRes.status}`)
+        }
+        setIsUploading(false)
       }
 
+      // Step 2: Send the chat message to /chat
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ message: message || "" }),
       })
 
       if (!res.ok) throw new Error(`Server responded with status ${res.status}`)
@@ -151,6 +117,7 @@ export function ChatSection() {
         { role: "assistant", content: data.response, sources: data.sources },
       ])
     } catch (err: unknown) {
+      setIsUploading(false)
       const isCors = err instanceof TypeError && err.message.toLowerCase().includes("fetch")
       setMessages((prev) => [
         ...prev,
@@ -167,7 +134,7 @@ export function ChatSection() {
     }
   }
 
-  const canSend = (input.trim() || !!attachedFile) && !isTyping && !isReadingFile
+  const canSend = (input.trim() || !!attachedFile) && !isTyping && !isUploading
 
   return (
     <section id="chat" className="py-24 md:py-32">
@@ -318,7 +285,7 @@ export function ChatSection() {
             <div className="border-t border-border bg-muted/30 px-4 pt-3 pb-2">
               <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 w-fit max-w-xs">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  {isReadingFile ? (
+                  {isUploading ? (
                     <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                   ) : attachedFile.type === "pdf" ? (
                     <File className="h-4 w-4 text-primary" />
@@ -331,7 +298,7 @@ export function ChatSection() {
                     {attachedFile.name}
                   </p>
                   <p className="text-[10px] text-muted-foreground mt-0.5">
-                    {isReadingFile ? "Extracting text…" : `${attachedFile.type.toUpperCase()} · ${attachedFile.content.length.toLocaleString()} chars`}
+                    {isUploading ? "Uploading…" : `${attachedFile.type.toUpperCase()} · Ready to upload`}
                   </p>
                 </div>
                 <button
@@ -366,7 +333,7 @@ export function ChatSection() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={isTyping || isReadingFile}
+                disabled={isTyping || isUploading}
                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors ${
                   attachedFile
                     ? "border-primary/40 bg-primary/10 text-primary"
